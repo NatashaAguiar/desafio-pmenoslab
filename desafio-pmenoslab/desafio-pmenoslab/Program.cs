@@ -2,13 +2,17 @@ using desafio_pmenoslab;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+    //.Configuration.SetBasePath(Directory.GetCurrentDirectory())
+    //.AddJsonFile("appsettings.Development.json", optional: true, reloadOnChange: true)
+    //.AddEnvironmentVariables();
+
 
 // Add services to the container.
-
+    
 builder.Services.AddControllers();
 
 builder.Services.AddDbContext<Context>(
-        options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
+        options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

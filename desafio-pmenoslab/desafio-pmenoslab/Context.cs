@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace desafio_pmenoslab
 {
-    public class Context : DbContext 
+    public class Context : DbContext
     {
+        public DbSet<Product> Product { get; set; }
+
         public Context(DbContextOptions<Context> options)
-        : base(options)
-        {
-        }
+        : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -16,8 +16,8 @@ namespace desafio_pmenoslab
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+           
         }
-
-        public DbSet<Product> Product { get; set; }
     }
+    
 }
