@@ -2,57 +2,51 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Reflection.Metadata.Ecma335;
 
 namespace desafio_pmenoslab.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProductController : ControllerBase
+    public class StoreController : ControllerBase
     {
         private Context _context;
-        private Product product;
-
-        public object Id { get; private set; }
-
-        public ProductController(Context context) 
+        public StoreController(Context context)
         {
             _context = context;
         }
-
         [HttpGet]
         public async Task<IActionResult> GetAsync()
         {
-            List<Product> listProduct = await _context.Product.ToListAsync();
-            return Ok(listProduct);
+            List<Store> listStore = await _context.Store.ToListAsync();
+            return Ok(listStore);
         }
-
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(Product product)
+        public async Task<IActionResult> CreateAsync(Store store)
         {
-            _context.Product.Add(product);
+            _context.Store.Add(store);
             await _context.SaveChangesAsync();
-            return Created("", new {product.Id});
+            return Created("", new { store.Id });
         }
         [HttpPut]
-        public async Task<IActionResult> UpDateAsync(Product product)
+        public async Task<IActionResult> UpDataAsync(Store store)
         {
-            _context.Product.Update(product);
+            _context.Store.Update(store);
             await _context.SaveChangesAsync();
             return NoContent();
         }
-        
         [HttpDelete]
         public async Task<IActionResult> DeleteAsync(int Id)
         {
-            Product product = await _context.Product.FirstOrDefaultAsync(product => product.Id == Id);
-            if (product != null)
+            Store store = await _context.Store.FirstOrDefaultAsync(store => store.Id == Id);
+            if(store != null)
             {
-                _context.Product.Remove(product);
+                _context.Store.Remove(store);
                 await _context.SaveChangesAsync();
             }
             return NoContent();
         }
 
     }
+
 }
